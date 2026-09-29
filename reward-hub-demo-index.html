@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Reward Hub — Demo</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#06100c;color:#f4f8f6;font-family:Inter,system-ui,sans-serif}
+.app{max-width:520px;margin:auto;padding:16px 14px 90px}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.brand{font-size:21px;font-weight:850}.muted{color:#91a69d;font-size:12px}.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#163a2b;color:#35d99f;font-weight:800}
+.hero{padding:20px;border-radius:22px;background:linear-gradient(145deg,#123625,#08130e);border:1px solid #1d4a36}
+.label{font-size:12px;color:#91aaa0}.balance{font-size:39px;font-weight:900;margin:3px 0 8px}.status{display:inline-flex;gap:7px;align-items:center;padding:6px 10px;border-radius:99px;background:#123b2c;color:#72e2b6;font-size:11px;font-weight:750}.dot{width:7px;height:7px;border-radius:50%;background:#35d99f}
+.actions,.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}button{border:0;border-radius:13px;padding:12px;background:#15382a;color:#e8f6f0;font-weight:750;cursor:pointer}button.primary{background:#26d39c;color:#062117}button:disabled{opacity:.5}
+.section{margin-top:18px}.title{font-size:16px;font-weight:850;margin:0 0 10px}.card{background:#0c1a14;border:1px solid #18372a;border-radius:17px;padding:15px}.stat{font-size:21px;font-weight:850;margin-top:4px}
+.task{display:flex;justify-content:space-between;align-items:center;gap:10px}.task+.task{border-top:1px solid #183127;margin-top:12px;padding-top:12px}.taskname{font-weight:750;font-size:14px}.taskdesc{color:#8da49a;font-size:11px;margin-top:3px}.task button{width:auto;padding:9px 11px;font-size:11px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:11px 0}.row+.row{border-top:1px solid #183127}.green{color:#55dfaa;font-weight:800}
+.notice{margin-top:15px;padding:12px;border:1px solid #173326;background:#0a1711;border-radius:14px;color:#aabdb5;font-size:11px;line-height:1.5}
+.nav{position:fixed;z-index:5;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);display:grid;grid-template-columns:repeat(5,1fr);background:#08130e;border-top:1px solid #183127;padding:7px 6px calc(7px + env(safe-area-inset-bottom))}
+.nav button{background:transparent;color:#8fa59d;padding:8px 2px;font-size:10px}.nav button.active{color:#35d99f}
+.modal{position:fixed;inset:0;background:#000b;display:grid;align-items:end;padding:12px;z-index:10}.modal.hidden{display:none}.box{width:min(520px,100%);background:#0c1a14;border:1px solid #214735;border-radius:20px;padding:18px}.box h2{margin:0 0 7px}.box p{color:#9eb1a9;font-size:13px;line-height:1.5}.close{width:100%;margin-top:8px}
+@media(min-width:600px){.nav{bottom:14px;border:1px solid #183127;border-radius:18px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="head"><div><div class="brand">Reward Hub</div><div class="muted">Telegram Mini App • DEMO</div></div><div class="avatar">R</div></header>
+
+  <section class="hero">
+    <div class="label">Demo Welcome Bonus</div>
+    <div class="balance" id="balance">$100.00</div>
+    <div class="status"><span class="dot"></span> Demo account active</div>
+    <div class="actions">
+      <button class="primary" id="bonus">Daily Bonus +$1</button>
+      <button id="profile">Profile</button>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card"><div class="muted">Completed Tasks</div><div class="stat" id="count">0</div></div>
+    <div class="card"><div class="muted">Referrals</div><div class="stat">0</div></div>
+  </section>
+
+  <section class="section">
+    <h2 class="title">Earn Demo Balance</h2>
+    <div class="card">
+      <div class="task"><div><div class="taskname">▶ Watch YouTube Demo</div><div class="taskdesc">Watch a demo video • +$0.005</div></div><button class="primary taskbtn" data-reward=".005" data-name="YouTube Demo">Claim</button></div>
+      <div class="task"><div><div class="taskname">🎮 Game + Ad Demo</div><div class="taskdesc">Play/watch demo ad • +$0.002</div></div><button class="taskbtn" data-reward=".002" data-name="Game + Ad Demo">Claim</button></div>
+      <div class="task"><div><div class="taskname">📋 Simple Task</div><div class="taskdesc">Complete demo task • +$0.50</div></div><button class="taskbtn" data-reward=".50" data-name="Simple Task">Claim</button></div>
+      <div class="task"><div><div class="taskname">👥 Friend Referral</div><div class="taskdesc">Demo referral reward • +$3.00</div></div><button class="taskbtn" data-reward="3" data-name="Friend Referral">Claim</button></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="title">Account</h2>
+    <div class="grid">
+      <button id="deposit">💳 Deposit</button>
+      <button id="withdraw">💸 Withdraw</button>
+      <button id="verify">✓ Verification</button>
+      <button id="referral">🔗 Referral</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="title">Recent Activity</h2>
+    <div class="card" id="history"><div class="row"><span>Welcome demo bonus</span><strong class="green">+$100.00</strong></div></div>
+  </section>
+
+  <div class="notice"><strong>DEMO ONLY:</strong> All balances, rewards, deposit/withdraw screens and verification status are simulated UI. No real money is accepted, transferred, deposited or withdrawn by this frontend.</div>
+</div>
+
+<nav class="nav">
+  <button class="active" data-target="top">Home</button>
+  <button data-target="earn">Earn</button>
+  <button data-target="account">Account</button>
+  <button data-target="history">History</button>
+  <button id="navProfile">Profile</button>
+</nav>
+
+<div class="modal hidden" id="modal"><div class="box"><h2 id="mtitle">Demo</h2><p id="mtext"></p><button class="primary close" id="close">Close</button></div></div>
+
+<script>
+(()=>{
+const KEY="rewardHubDemoV2";
+let state=JSON.parse(localStorage.getItem(KEY)||"null")||{balance:100,tasks:0,history:[]};
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+const balance=$("#balance"), count=$("#count"), history=$("#history"), modal=$("#modal"), mt=$("#mtitle"), mx=$("#mtext");
+function money(n){return "$"+Number(n).toFixed(3).replace(/\.?0+$/,".00").replace(/(\.\d{2})0$/,"$1")}
+function save(){localStorage.setItem(KEY,JSON.stringify(state))}
+function render(){
+ balance.textContent=money(state.balance);count.textContent=state.tasks;history.innerHTML="";
+ if(!state.history.length){history.innerHTML='<div class="row"><span>Welcome demo bonus</span><strong class="green">+$100.00</strong></div>';return}
+ state.history.slice().reverse().slice(0,10).forEach(x=>{
+   const r=document.createElement("div");r.className="row";
+   r.innerHTML="<span>"+x.name+"</span><strong class='green'>+"+money(x.reward)+"</strong>";history.appendChild(r)
+ });
+}
+function open(title,text){mt.textContent=title;mx.textContent=text;modal.classList.remove("hidden")}
+$$(".taskbtn").forEach(b=>b.addEventListener("click",()=>{
+ if(b.disabled)return;const reward=Number(b.dataset.reward);
+ state.balance+=reward;state.tasks++;state.history.push({name:b.dataset.name,reward});
+ b.disabled=true;b.textContent="Completed";save();render();
+}));
+$("#bonus").addEventListener("click",function(){
+ if(this.disabled)return;state.balance+=1;state.history.push({name:"Daily Bonus",reward:1});
+ this.disabled=true;this.textContent="Claimed";save();render();
+});
+$("#profile").onclick=()=>open("Demo Profile","Demo User • Account Active • Verification: Demo");
+$("#deposit").onclick=()=>open("Deposit — Demo","This is a frontend demonstration only. No real payment method is connected.");
+$("#withdraw").onclick=()=>open("Withdraw — Demo","This is a frontend demonstration only. No real withdrawal or money transfer is connected.");
+$("#verify").onclick=()=>open("Verification — Demo","Demo verification status. Real identity verification is not connected.");
+$("#referral").onclick=()=>open("Referral — Demo","Your demo referral code: DEMO-12345. Referral rewards are simulated.");
+$("#navProfile").onclick=()=>open("Profile","Demo User • Balance: "+money(state.balance));
+$("#close").onclick=()=>modal.classList.add("hidden");
+modal.onclick=e=>{if(e.target===modal)modal.classList.add("hidden")};
+$$(".nav [data-target]").forEach(b=>b.onclick=()=>{
+ $$(".nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");
+ const t=b.dataset.target;
+ if(t==="top")scrollTo({top:0,behavior:"smooth"});
+ if(t==="earn")document.querySelector(".section").scrollIntoView({behavior:"smooth"});
+ if(t==="account")$("#deposit").scrollIntoView({behavior:"smooth"});
+ if(t==="history")$("#history").scrollIntoView({behavior:"smooth"});
+});
+render();
+})();
+</script>
+</body>
+</html>
